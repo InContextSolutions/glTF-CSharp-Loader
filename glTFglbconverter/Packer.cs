@@ -93,22 +93,21 @@ namespace glTFglbConverter
 
         private static Image.MimeTypeEnum? GetMimeType(string uri)
         {
-            if (String.IsNullOrEmpty(uri))
+            if (!String.IsNullOrEmpty(uri))
             {
-                return null;
+                if (uri.StartsWith("data:image/png;base64,") || uri.EndsWith(".png"))
+                {
+                    return Image.MimeTypeEnum.image_png;
+                }
+                else if (uri.StartsWith("data:image/jpeg;base64,") || uri.EndsWith(".jpg") || uri.EndsWith(".jpeg"))
+                {
+                    return Image.MimeTypeEnum.image_jpeg;
+                }
             }
 
-            if (uri.StartsWith("data:image/png;base64,") || uri.EndsWith(".png"))
-            {
-                return Image.MimeTypeEnum.image_png;
-            }
+            return null;
 
-            if (uri.StartsWith("data:image/jpeg;base64,") || uri.EndsWith(".jpg") || uri.EndsWith(".jpeg"))
-            {
-                return Image.MimeTypeEnum.image_jpeg;
-            }
-
-            throw new InvalidOperationException("Unable to determine mime type from uri");
+            //throw new InvalidOperationException("Unable to determine mime type from uri");
         }
 
         private static string GetUniqueFilePath(string directoryPath, string baseFileName, string fileExtension)

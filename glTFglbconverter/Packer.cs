@@ -51,6 +51,14 @@ namespace glTFglbConverter
                 {
                     for (var index = 0; index < model.Images.Length; index++)
                     {
+                        if (model.Images[index].Extras != null && model.Images[index].Extras["embed"] != null)
+                        {
+                            //var jsonSerializer = Newtonsoft.Json.JsonSerializer.Create();
+                            bool embedTexture = (bool)model.Images[index].Extras["embed"];
+                            if (!embedTexture)
+                                continue;
+                        }
+
                         var byteOffset = memoryStream.Position;
 
                         var data = model.OpenImageFile(index, inputFilePath);
@@ -87,6 +95,7 @@ namespace glTFglbConverter
             }
 
             var outputFilePath = GetUniqueFilePath(inputDirectoryPath, inputFileName, ".glb");
+            Console.WriteLine("Saving binary to: " + outputFilePath);
             Interface.SaveBinaryModel(model, binBufferData, outputFilePath);
             SelectFileInExplorer(outputFilePath, true);
         }

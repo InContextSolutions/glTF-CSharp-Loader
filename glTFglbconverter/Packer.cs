@@ -97,7 +97,7 @@ namespace glTFglbConverter
             var outputFilePath = GetUniqueFilePath(inputDirectoryPath, inputFileName, ".glb");
             Console.WriteLine("Saving binary to: " + outputFilePath);
             Interface.SaveBinaryModel(model, binBufferData, outputFilePath);
-            SelectFileInExplorer(outputFilePath, true);
+            //SelectFileInExplorer(outputFilePath, true);
         }
 
         private static Image.MimeTypeEnum? GetMimeType(string uri)
